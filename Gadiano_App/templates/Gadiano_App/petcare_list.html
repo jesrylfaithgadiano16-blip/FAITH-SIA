@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Cat Care System</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #e8f5e9;
+        }
+
+        .container {
+            width: 85%;
+            margin: 50px auto;
+            background-color: #dff3df;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .title {
+            background-color: #6675d8;
+            color: white;
+            padding: 15px 25px;
+        }
+
+        .title h1 {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #f0f4d8;
+            color: #222;
+            padding: 12px 8px;
+            text-align: center;
+        }
+
+        td {
+            padding: 12px 8px;
+            text-align: center;
+        }
+
+        tr {
+            background-color: #dff3df;
+        }
+
+        .no-records {
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="title">
+            <h1>Smart Cat Care System</h1>
+        </div>
+
+        {% if pets %}
+
+            <table>
+                <tr>
+                    <th>Pet ID</th>
+                    <th>Pet Name</th>
+                    <th>Pet Type</th>
+                    <th>Breed</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Owner Name</th>
+                    <th>Contact Number</th>
+                </tr>
+
+                {% for pet in pets %}
+                <tr>
+                    <td>{{ pet.pet_id }}</td>
+                    <td>{{ pet.pet_name }}</td>
+                    <td>{{ pet.pet_type }}</td>
+                    <td>{{ pet.breed }}</td>
+                    <td>{{ pet.age }}</td>
+                    <td>{{ pet.gender }}</td>
+                    <td>{{ pet.owner_name }}</td>
+                    <td>{{ pet.contact_number }}</td>
+                </tr>
+                {% endfor %}
+
+            </table>
+
+        {% else %}
+
+            <div class="no-records">
+                <p>No pet records found.</p>
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</body>
+</html>
