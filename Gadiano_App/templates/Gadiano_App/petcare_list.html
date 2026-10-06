@@ -1,33 +1,98 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Cat Care System</title>
 
     <style>
-        body {
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #e8f5e9;
         }
 
-        .container {
-            width: 85%;
-            margin: 50px auto;
-            background-color: #dff3df;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e8f5e3;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 220px;
+            background-color: #6074d8;
+            color: white;
+            min-height: 100vh;
+            padding: 25px 15px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .menu {
+            display: block;
+            padding: 14px 18px;
+            margin-bottom: 10px;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .menu:hover,
+        .menu.active {
+            background-color: #4d62c4;
+        }
+
+        /* MAIN CONTENT */
+        .main {
+            flex: 1;
+            padding: 35px;
+        }
+
+        .content {
+            background-color: #ffffff;
             border-radius: 15px;
             overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
-        .title {
-            background-color: #6675d8;
+        /* HEADER */
+        .header {
+            background-color: #6074d8;
             color: white;
-            padding: 15px 25px;
+            padding: 22px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .title h1 {
-            margin: 0;
+        .header h1 {
             font-size: 25px;
+        }
+
+        .add-btn {
+            background-color: #29a9e8;
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .add-btn:hover {
+            background-color: #168fc8;
+        }
+
+        /* TABLE */
+        .table-container {
+            overflow-x: auto;
         }
 
         table {
@@ -36,72 +101,175 @@
         }
 
         th {
-            background-color: #f0f4d8;
-            color: #222;
-            padding: 12px 8px;
+            background-color: #f0f2d8;
+            color: #111;
+            padding: 14px 10px;
             text-align: center;
+            font-size: 14px;
         }
 
         td {
-            padding: 12px 8px;
+            padding: 13px 10px;
             text-align: center;
+            background-color: #e6f4df;
+            font-size: 14px;
         }
 
-        tr {
-            background-color: #dff3df;
+        tr:hover td {
+            background-color: #dcefd5;
         }
 
-        .no-records {
-            padding: 20px;
+        /* DELETE */
+        .delete-btn {
+            background-color: #ef4b43;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background-color: #d83a33;
+        }
+
+        .empty {
+            padding: 25px;
             text-align: center;
+            color: #666;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 180px;
+            }
+
+            .main {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            th,
+            td {
+                white-space: nowrap;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <div class="container">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
 
-        <div class="title">
-            <h1>Smart Cat Care System</h1>
+        <div class="logo">
+            🐾 PET CARE
         </div>
 
-        {% if pets %}
+        <a href="{% url 'event_list' %}" class="menu active">
+            🏠 Dashboard
+        </a>
 
-            <table>
-                <tr>
-                    <th>Pet ID</th>
-                    <th>Pet Name</th>
-                    <th>Pet Type</th>
-                    <th>Breed</th>
-                    <th>Age</th>
-                    <th>Gender</th>
-                    <th>Owner Name</th>
-                    <th>Contact Number</th>
-                </tr>
+        <a href="{% url 'event_list' %}" class="menu">
+            🐱 Pets
+        </a>
 
-                {% for pet in pets %}
-                <tr>
-                    <td>{{ pet.pet_id }}</td>
-                    <td>{{ pet.pet_name }}</td>
-                    <td>{{ pet.pet_type }}</td>
-                    <td>{{ pet.breed }}</td>
-                    <td>{{ pet.age }}</td>
-                    <td>{{ pet.gender }}</td>
-                    <td>{{ pet.owner_name }}</td>
-                    <td>{{ pet.contact_number }}</td>
-                </tr>
-                {% endfor %}
+        <a href="{% url 'add_pet' %}" class="menu">
+            ＋ Add Pet
+        </a>
 
-            </table>
+    </div>
 
-        {% else %}
 
-            <div class="no-records">
-                <p>No pet records found.</p>
+    <!-- MAIN -->
+    <div class="main">
+
+        <div class="content">
+
+            <div class="header">
+                <h1>Pet Care Records</h1>
+
+                <a href="{% url 'add_pet' %}" class="add-btn">
+                    + Add Pet
+                </a>
             </div>
 
-        {% endif %}
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Pet ID</th>
+                            <th>Pet Name</th>
+                            <th>Pet Type</th>
+                            <th>Breed</th>
+                            <th>Age</th>
+                            <th>Gender</th>
+                            <th>Owner Name</th>
+                            <th>Contact Number</th>
+                            <th>Date Registered</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for pet in pets %}
+
+                        <tr>
+                            <td>{{ pet.pet_id }}</td>
+                            <td>{{ pet.pet_name }}</td>
+                            <td>{{ pet.pet_type }}</td>
+                            <td>{{ pet.breed }}</td>
+                            <td>{{ pet.age }}</td>
+                            <td>{{ pet.gender }}</td>
+                            <td>{{ pet.owner_name }}</td>
+                            <td>{{ pet.contact_number }}</td>
+
+                            <td>
+                                {{ pet.date_registered|date:"M d, Y h:i A" }}
+                            </td>
+
+                            <td>
+
+                                <form method="POST"
+                                      action="{% url 'delete_pet' pet.pet_id %}"
+                                      onsubmit="return confirm('Are you sure you want to delete this pet?');">
+
+                                    {% csrf_token %}
+
+                                    <button type="submit" class="delete-btn">
+                                        Delete
+                                    </button>
+
+                                </form>
+
+                            </td>
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+                            <td colspan="10" class="empty">
+                                No pet records found.
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
 
     </div>
 
